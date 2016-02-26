@@ -32,7 +32,7 @@ All contributions&mdash;advice, criticism, and assistance&mdash;are welcomed and
 
 ### Setup
 
-Apart from requiring Oracle's Java SE Development Kit 8 (JDK 8), this project is “batteries included.” Simply start [Typesafe Activator](http://typesafe.com/activator) from the project's root to get started (installing [SBT](http://scala-sbt.org/0.13/tutorial/Setup.html) is optional). It's recommended to use one of the following resources to obtain Java.
+Apart from requiring Oracle's Java SE Development Kit 8 (JDK 8), this project is “batteries included.” Simply start [Lightbend Activator](http://lightbend.com/activator) from the project's root to get started (installing [SBT](http://scala-sbt.org/0.13/tutorial/Setup.html) is optional). It's recommended to use one of the following resources to obtain Java.
 
 - [Web Upd8 PPA](http://webupd8.org/2012/09/install-oracle-java-8-in-ubuntu-via-ppa.html)
   - Best packages for Debian-based distributions (_e.g._, Debian, Ubuntu, Mint)
