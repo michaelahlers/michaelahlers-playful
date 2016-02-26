@@ -4,9 +4,7 @@ Odds and ends for developers using [Lightbend's](http://lightbend.com) [Play Fra
 
 ## About
 
-_Playful_ offers features its author wishes were part of APIs included with Play Framework.
-
-It's starting small and will expand incrementally, focusing primarily on augmenting the [iteratee](http://playframework.com/documentation/2.4.x/Iteratees) and [JSON](http://playframework.com/documentation/2.4.x/ScalaJson) libraries.
+_Playful_ offers features its author wishes were part of APIs included with Play Framework. It's starting small and will expand incrementally, focusing primarily on augmenting the [iteratee](http://playframework.com/documentation/2.4.x/Iteratees) and [JSON](http://playframework.com/documentation/2.4.x/ScalaJson) libraries.
 
 Everything you'll find here will be tested and considered production-ready (despite the low version number). What's not clear is whether this library will receive maintenance in the long term. (It may turn out to be redundant as Lightbend expands their offerings and adds features.) In the meantime, interested users might consider simply copying and pasting source code directly into their own projects. (Although updates will be published to public repositories.)
 
