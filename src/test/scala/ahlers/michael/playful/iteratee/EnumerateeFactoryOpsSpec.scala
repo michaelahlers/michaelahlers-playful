@@ -13,6 +13,23 @@ class EnumerateeFactoryOpsSpec
           with Matchers
           with LazyLogging {
 
+  "Joining" must {
+
+    "insert separators" in {
+      val exemplar = List("A", "B", "C")
+
+      val expected = exemplar.mkString(",")
+
+      val actual =
+        Enumerator.enumerate(exemplar) &>
+          Enumeratees.joining(Enumerator(",")) |>>>
+          Iteratee.getChunks
+
+      Await.result(actual, Duration.Inf).mkString should be(expected)
+    }
+
+  }
+
   "Zip with index" must {
 
     "match the iterable contract" in {

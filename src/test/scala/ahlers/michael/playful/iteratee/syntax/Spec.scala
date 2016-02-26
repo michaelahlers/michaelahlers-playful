@@ -2,20 +2,21 @@ package ahlers.michael.playful.iteratee.syntax
 
 import com.typesafe.scalalogging.LazyLogging
 import org.scalatest.{Matchers, WordSpec}
-import play.api.libs.iteratee.Enumeratee
+import play.api.libs.iteratee.{Enumeratee, Enumerator}
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class Spec
   extends WordSpec
           with Matchers
           with LazyLogging {
 
-  "Importing" must {
+  "Importing factory operations" must {
 
-    "add factory operations" in {
-      import ahlers.michael.playful.iteratee.syntax._
-      Enumeratee.zipWithIndex should be(an[Enumeratee[_, _]])
-    }
+    import ahlers.michael.playful.iteratee.syntax._
 
+    "add zip with index" in Enumeratee.zipWithIndex should be(an[Enumeratee[_, _]])
+    "add joining" in Enumeratee.joining(Enumerator.empty) should be(an[Enumeratee[_, _]])
   }
 
 }
