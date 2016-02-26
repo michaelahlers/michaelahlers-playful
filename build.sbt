@@ -79,11 +79,13 @@ apiMappings ++= {
 
 //publishTo := Some("JFrog OSS (local snapshots)" at "http://oss.jfrog.org/artifactory/oss-snapshot-local").filter(_ => isSnapshot.value)
 
+publishMavenStyle := true
+
+publishArtifact in Test := true
+
 bintrayPackage := "michaelahlers-playful"
 
 bintrayPackageLabels := Seq("scala", "play framework", "enumerators", "enumeratees", "iteratees")
-
-publishMavenStyle := true
 
 bintrayReleaseOnPublish := true
 
