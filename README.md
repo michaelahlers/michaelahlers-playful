@@ -1,6 +1,6 @@
 # Playful [![Build Status](https://travis-ci.org/michaelahlers/michaelahlers-playful.svg?branch=master)](https://travis-ci.org/michaelahlers/michaelahlers-playful)
 
-Odds and ends for developers using Lightbend's Play Framework.
+Odds and ends for developers using [Lightbend's](http://lightbend.com) [Play Framework](http://playframework.com).
 
 ## Development
 
