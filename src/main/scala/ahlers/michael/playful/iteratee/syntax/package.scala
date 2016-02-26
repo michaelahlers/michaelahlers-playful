@@ -4,9 +4,6 @@ import play.api.libs.iteratee.Enumeratee
 
 import scala.language.implicitConversions
 
-/**
- * Import to augment [[play.api.libs.iteratee.Enumeratee]]'s companion object with [[EnumerateeFactoryOps additional factory functions]].
- */
 package object syntax {
 
   /**
