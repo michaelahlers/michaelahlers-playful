@@ -82,7 +82,7 @@ bintrayPackage := "michaelahlers-playful"
 
 bintrayPackageLabels := Seq("scala", "play framework", "enumerators", "enumeratees", "iteratees")
 
-publishMavenStyle := false
+publishMavenStyle := true
 
 bintrayReleaseOnPublish := true
 
