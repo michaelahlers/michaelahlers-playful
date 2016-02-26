@@ -4,6 +4,8 @@ Odds and ends for developers using [Lightbend's](http://lightbend.com) [Play Fra
 
 ## Development
 
+All contributions are strongly encouraged.
+
 ### Setup
 
 Apart from requiring Oracle's Java SE Development Kit 8 (JDK 8), this project is “batteries included.” Simply start [Typesafe Activator](http://typesafe.com/activator) from the project's root to get started (installing [SBT](http://scala-sbt.org/0.13/tutorial/Setup.html) is optional). It's recommended to use one of the following resources to obtain Java.
@@ -15,7 +17,7 @@ Apart from requiring Oracle's Java SE Development Kit 8 (JDK 8), this project is
   - Installer packages for OS X.
   - Installer packages for Windows.
 
-### Testing
+### Tests
 
 From an SBT shell, the unit test suite is run with:
 
@@ -37,17 +39,7 @@ Test code coverage reports may be generated with:
 
 Visit `target/scala-2.11/scoverage-report/index.html` (from the project's root) in your browser to see results.
 
-## Documentation
-
-API documentation is available with copious developer notes is included. From an SBT shell, generate it with:
-
-```
-doc
-```
-
-Visit `target/scala-2.11/api/index.html` (from the project's root) in your browser to see results.
-
-## Benchmarking
+### Benchmarks
 
 There's currently a beginner's attempt at writing meaningful performance tests using [ScalaMeter](http://scalameter.github.io) in `src/bench`. Benchmarks can be run with:
 
@@ -56,6 +48,16 @@ bench:test
 ```
 
 Visit `target/benchmarks/report/index.html` (from the project's root) in your browser to see results.
+
+### Documentation
+
+API documentation is available with copious developer notes is included. From an SBT shell, generate it with:
+
+```
+doc
+```
+
+Visit `target/scala-2.11/api/index.html` (from the project's root) in your browser to see results.
 
 ## Resources
 
