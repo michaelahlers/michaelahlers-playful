@@ -35,3 +35,11 @@ scalacOptions in(Compile, doc) ++=
 
 /** See http://scala-sbt.org/0.13/docs/Howto-Scaladoc.html for details. */
 autoAPIMappings := true
+
+lazy val spotter =
+  (project in file("."))
+    .enablePlugins(BuildInfoPlugin)
+    .settings(
+      buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
+      buildInfoPackage := "ahlers.michael.playful"
+    )
