@@ -67,12 +67,23 @@ apiMappings ++= {
 
 licenses += "MIT" -> url("http://opensource.org/licenses/MIT")
 
-publishMavenStyle := false
+homepage := Some(url("http://github.com/michaelahlers/michaelahlers-playful"))
+
+developers :=
+  Developer("michaelahlers", "Michael Ahlers", "michael@ahlers.co", url("http://michaelahlers.org")) ::
+    Nil
+
+scmInfo := Some(ScmInfo(url("http://github.com/michaelahlers/michaelahlers-playful"), "git@github.com:michaelahlers/michaelahlers-playful.git"))
 
 //bintrayRepository := "maven"
+
 bintrayPackage := "michaelahlers-playful"
+
 //bintrayReleaseOnPublish := false
+
 bintrayPackageLabels := Seq("scala", "play framework", "enumerators", "enumeratees", "iteratees")
+
+publishMavenStyle := false
 
 lazy val Benchmark = config("bench") extend Test
 
