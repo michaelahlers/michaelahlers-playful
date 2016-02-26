@@ -54,7 +54,7 @@ apiMappings ++= {
   )
 }
 
-lazy val spotter =
+lazy val playful =
   (project in file("."))
     .enablePlugins(BuildInfoPlugin)
     .settings(
