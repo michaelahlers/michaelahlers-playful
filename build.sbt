@@ -39,6 +39,7 @@ resolvers += "Sonatype (snapshots)" at "https://oss.sonatype.org/content/reposit
 libraryDependencies ++=
   "ch.qos.logback" % "logback-classic" % "1.1.3" ::
     "com.typesafe.play" %% "play-iteratees" % "2.4.6" ::
+    "com.typesafe.play" %% "play-json" % "2.4.6" ::
     "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0" ::
     Nil
 

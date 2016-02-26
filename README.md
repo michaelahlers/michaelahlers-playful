@@ -89,7 +89,11 @@ Visit `target/scala-2.11/api/index.html` (from the project's root) in your brows
 
 ### [Play Iteratees](http://playframework.com/documentation/2.4.x/Iteratees)
 
-The Iteratee, Enumerator, and Enumeratee are powerful concepts for handling high volume streams. Playful provides a few additional enhancements to the core API.
+A reactive API for handling high volume streams.
+
+### [Play JSON](http://playframework.com/documentation/2.4.x/ScalaJson)
+
+An outstanding API for working with JSON in Scala.
 
 ### [ScalaMeter](http://scalameter.github.io/)
 
