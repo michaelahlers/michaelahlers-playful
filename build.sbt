@@ -4,6 +4,16 @@ name := "playful"
 
 description := "Odds and ends for developers using Lightbend's Play Framework."
 
+licenses += "MIT" -> url("http://opensource.org/licenses/MIT")
+
+homepage := Some(url("http://github.com/michaelahlers/michaelahlers-playful"))
+
+developers :=
+  Developer("michaelahlers", "Michael Ahlers", "michael@ahlers.co", url("http://michaelahlers.org")) ::
+    Nil
+
+scmInfo := Some(ScmInfo(url("http://github.com/michaelahlers/michaelahlers-playful"), "git@github.com:michaelahlers/michaelahlers-playful.git"))
+
 scalaVersion := "2.11.7"
 
 scalacOptions ++=
@@ -22,6 +32,7 @@ logBuffered := false
 parallelExecution in Benchmark := false
 
 resolvers += "Sonatype (releases)" at "https://oss.sonatype.org/content/repositories/releases"
+
 resolvers += "Sonatype (snapshots)" at "https://oss.sonatype.org/content/repositories/snapshots"
 
 /** Compile and runtime dependencies. */
@@ -65,25 +76,15 @@ apiMappings ++= {
   )
 }
 
-licenses += "MIT" -> url("http://opensource.org/licenses/MIT")
-
-homepage := Some(url("http://github.com/michaelahlers/michaelahlers-playful"))
-
-developers :=
-  Developer("michaelahlers", "Michael Ahlers", "michael@ahlers.co", url("http://michaelahlers.org")) ::
-    Nil
-
-scmInfo := Some(ScmInfo(url("http://github.com/michaelahlers/michaelahlers-playful"), "git@github.com:michaelahlers/michaelahlers-playful.git"))
-
-//bintrayRepository := "maven"
+//publishTo := Some("JFrog OSS (local snapshots)" at "http://oss.jfrog.org/artifactory/oss-snapshot-local").filter(_ => isSnapshot.value)
 
 bintrayPackage := "michaelahlers-playful"
-
-//bintrayReleaseOnPublish := false
 
 bintrayPackageLabels := Seq("scala", "play framework", "enumerators", "enumeratees", "iteratees")
 
 publishMavenStyle := false
+
+bintrayReleaseOnPublish := true
 
 lazy val Benchmark = config("bench") extend Test
 
