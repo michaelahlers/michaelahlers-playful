@@ -2,7 +2,7 @@ organization := "ahlers.michael"
 
 name := "playful"
 
-version := "0.0.1-SNAPSHOT"
+` description := "Odds and ends for developers using Lightbend's Play Framework."
 
 scalaVersion := "2.11.7"
 
@@ -64,6 +64,15 @@ apiMappings ++= {
     findManagedDependency("com.typesafe.play", "play-iteratee") -> url("http://playframework.com/documentation/2.4.x/api/scala/")
   )
 }
+
+licenses += "MIT" -> url("http://opensource.org/licenses/MIT")
+
+publishMavenStyle := false
+
+//bintrayRepository := "maven"
+bintrayPackage := "michaelahlers-playful"
+//bintrayReleaseOnPublish := false
+bintrayPackageLabels := Seq("scala", "play framework", "enumerators", "enumeratees", "iteratees")
 
 lazy val Benchmark = config("bench") extend Test
 
