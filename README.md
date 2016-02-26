@@ -30,7 +30,7 @@ libraryDependencies += "ahlers.michael" %% "playful" % "0.0.1"
 
 ## Development
 
-All contributions&mdash;advice, criticisms, and assistance&mdash;are welcomed and strongly encouraged.
+All contributions&mdash;advice, criticism, and assistance&mdash;are welcomed and strongly encouraged.
 
 ### Setup
 
