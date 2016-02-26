@@ -12,11 +12,12 @@ class Spec
           with LazyLogging {
 
   "Importing factory operations" must {
-
-    import ahlers.michael.playful.iteratee.syntax._
-
-    "add zip with index" in Enumeratee.zipWithIndex should be(an[Enumeratee[_, _]])
-    "add joining" in Enumeratee.joining(Enumerator.empty) should be(an[Enumeratee[_, _]])
+    "add zip with index" in {
+      Enumeratee.zipWithIndex should be(an[Enumeratee[_, _]])
+    }
+    "add joining" in {
+      Enumeratee.joining(Enumerator.empty) should be(an[Enumeratee[_, _]])
+    }
   }
 
 }
