@@ -2,7 +2,7 @@ organization := "ahlers.michael"
 
 name := "playful"
 
-` description := "Odds and ends for developers using Lightbend's Play Framework."
+description := "Odds and ends for developers using Lightbend's Play Framework."
 
 scalaVersion := "2.11.7"
 
