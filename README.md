@@ -47,8 +47,22 @@ doc
 
 Visit `target/scala-2.11/api/index.html` (from the project's root) in your browser to see results.
 
+## Benchmarking
+
+There's currently a beginner's attempt at writing meaningful performance tests using [ScalaMeter](http://scalameter.github.io) in `src/bench`. Benchmarks can be run with:
+
+```
+bench:test
+```
+
+Visit `target/benchmarks/report/index.html` (from the project's root) in your browser to see results.
+
 ## Resources
 
 ### [Play Iteratees](http://playframework.com/documentation/2.4.x/Iteratees)
 
 The Iteratee, Enumerator, and Enumeratee are powerful concepts for handling high volume streams. Playful provides a few additional enhancements to the core API.
+
+### [ScalaMeter](http://scalameter.github.io/)
+
+A benchmarking framework used to test performance of this library.
