@@ -2,7 +2,7 @@ organization := "ahlers.michael"
 
 name := "playful"
 
-version := "0.0.0"
+version := "0.0.1-SNAPSHOT"
 
 scalaVersion := "2.11.7"
 
