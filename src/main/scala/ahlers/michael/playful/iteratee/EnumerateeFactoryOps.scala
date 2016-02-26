@@ -27,5 +27,3 @@ class EnumerateeFactoryOps(e: Enumeratee.type) {
   def zipWithIndex[T]: Enumeratee[T, (T, Int)] = zipWithIndex(0)
 
 }
-
-object EnumerateeFactoryOps extends EnumerateeFactoryOps(Enumeratee)

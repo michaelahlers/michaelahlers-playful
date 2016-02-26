@@ -22,7 +22,7 @@ class EnumerateeFactoryOpsSpec
 
       val actual =
         Enumerator.enumerate(exemplar) &>
-          EnumerateeFactoryOps.zipWithIndex |>>>
+          Enumeratees.zipWithIndex |>>>
           Iteratee.getChunks
 
       Await.result(actual, Duration.Inf) should be(expected)
@@ -33,7 +33,7 @@ class EnumerateeFactoryOpsSpec
 
       val actual =
         Enumerator("A", "B", "C") &>
-          EnumerateeFactoryOps.zipWithIndex(1.0F, step = (i: Float) => i + 0.5F) |>>>
+          Enumeratees.zipWithIndex(1.0F, step = (i: Float) => i + 0.5F) |>>>
           Iteratee.getChunks
 
       Await.result(actual, Duration.Inf) should be(expected)
