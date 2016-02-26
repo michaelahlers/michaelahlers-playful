@@ -14,6 +14,16 @@ scalacOptions ++=
 scalacOptions in Test ++=
   Nil
 
+testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework")
+
+logBuffered := false
+
+/** Parallel execution tests defeats the value of benchmark tests. */
+parallelExecution in Benchmark := false
+
+resolvers += "Sonatype (releases)" at "https://oss.sonatype.org/content/repositories/releases"
+resolvers += "Sonatype (snapshots)" at "https://oss.sonatype.org/content/repositories/snapshots"
+
 /** Compile and runtime dependencies. */
 libraryDependencies ++=
   "ch.qos.logback" % "logback-classic" % "1.1.3" ::
@@ -23,7 +33,8 @@ libraryDependencies ++=
 
 /** Test dependencies. */
 libraryDependencies ++=
-  "org.scalamock" %% "scalamock-scalatest-support" % "3.2.2" % "test" ::
+  "com.storm-enroute" %% "scalameter" % "0.8-SNAPSHOT" % "test" ::
+    "org.scalamock" %% "scalamock-scalatest-support" % "3.2.2" % "test" ::
     "org.scalactic" %% "scalactic" % "2.2.6" % "test" ::
     "org.scalatest" %% "scalatest" % "2.2.6" % "test" ::
     Nil
@@ -54,6 +65,8 @@ apiMappings ++= {
   )
 }
 
+lazy val Benchmark = config("bench") extend Test
+
 lazy val playful =
   (project in file("."))
     .enablePlugins(BuildInfoPlugin)
@@ -61,3 +74,5 @@ lazy val playful =
       buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
       buildInfoPackage := "ahlers.michael.playful"
     )
+    .configs(Benchmark)
+    .settings(inConfig(Benchmark)(Defaults.testSettings): _*)
