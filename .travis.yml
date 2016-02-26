@@ -6,6 +6,7 @@ jdk:
 scala:
   - 2.11.7
 
+# See http://scala-sbt.org/0.13/docs/Travis-CI-with-sbt.html for recommendation.
 cache:
   directories:
     - $HOME/.ivy2/cache
