@@ -26,7 +26,7 @@ test
 Specific tests with:
 
 ```
-test-only boldradius.catalog.ItemSpec
+test-only ahlers.michael.playful.iteratee.EnumerateeOpsSpec
 ```
 
 Test code coverage reports may be generated with:
