@@ -31,6 +31,8 @@ class EnumerateeFactoryOps(e: Enumeratee.type) {
 
   /**
    * Zips elements with an index of the given [[scala.math.Numeric]] type, stepped by the given function.
+   *
+   * (Special thanks to [[https://github.com/eecolor EECOLOR]] for inspiring this factory with his answer to [[http://stackoverflow.com/a/27589990/700420 a question about enumeratees on Stack Overflow]].)
    */
   def zipWithIndex[E, I](first: I, step: I => I)(implicit ev: Numeric[I]): Enumeratee[E, (E, I)] =
     e.scanLeft[E](null.asInstanceOf[E] -> ev.minus(first, step(ev.zero))) {
