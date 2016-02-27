@@ -19,6 +19,7 @@ apiMappings ++= {
       if names.exists(module.name.startsWith)
     } yield entry.data -> url(location.replace("${revision}", revision(module.revision)))
 
+  /** Several of these may not be used in this project as this is a reusable set of mappings. */
   val mappings: Seq[(File, URL)] =
     mappingsFor("com.squants", List("squants"), "http://oss.sonatype.org/service/local/repositories/releases/archive/com/squants/squants_2.11/${revision}/squants_2.11-${revision}-javadoc.jar/!") ++
       mappingsFor("com.typesafe.akka", List("akka-actor"), "http://doc.akka.io/api/akka/${revision}/") ++
