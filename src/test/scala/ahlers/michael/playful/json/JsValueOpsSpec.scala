@@ -10,15 +10,14 @@ class JsValueOpsSpec
           with Matchers
           with LazyLogging {
 
-  "Naked value" must {
+  "Non-object values" must {
     "materialize at root" when {
       val exemplars =
-        toJson("string") ::
-          toJson(10) ::
-          toJson(10.5F) ::
-          arr(1, 2, 3) ::
+        JsNull ::
           toJson(true) ::
-          JsNull ::
+          toJson(10) ::
+          toJson("string") ::
+          arr(1, 2, 3) ::
           Nil
 
       exemplars foreach { exemplar =>
