@@ -12,6 +12,8 @@ class JsValueOps(value: JsValue) {
    * To illustrate:
    * {{{
 import ahlers.michael.playful.json.JsValues.materialized
+import play.api.libs.json.Json._
+import play.api.libs.json._
 
 val expected =
   Set(
