@@ -1,3 +1,5 @@
+import sbt._
+
 scalacOptions in(Compile, doc) ++=
   "-author" ::
     "-groups" ::
@@ -7,20 +9,21 @@ scalacOptions in(Compile, doc) ++=
 /** See http://scala-sbt.org/0.13/docs/Howto-Scaladoc.html for details. */
 autoAPIMappings := true
 
-/** See http://stackoverflow.com/a/20919304/700420 for details. */
+/** See http://stackoverflow.com/a/35673212/700420 for details. */
 apiMappings ++= {
-  def findDependency(organization: String, name: String): Seq[File] =
+  def mappingsFor(organization: String, names: List[String], location: String, revision: (String) => String = identity): Seq[(File, URL)] =
     for {
       entry: Attributed[File] <- (fullClasspath in Compile).value
       module: ModuleID <- entry.get(moduleID.key)
       if module.organization == organization
-      if module.name.startsWith(name)
-    } yield entry.data
+      if names.exists(module.name.startsWith)
+    } yield entry.data -> url(location.replace("${revision}", revision(module.revision)))
 
   val mappings: Seq[(File, URL)] =
-  //findDependency("org.scala-lang", "scala-library").map(_ -> url(s"http://scala-lang.org/api/${scalaVersion.value}/")) ++
-    findDependency("com.typesafe.play", "play-iteratee").map(_ -> url("http://playframework.com/documentation/2.4.x/api/scala/")) ++
-      findDependency("com.typesafe.play", "play-json").map(_ -> url("http://playframework.com/documentation/2.4.x/api/scala/"))
+    mappingsFor("com.squants", List("squants"), "http://oss.sonatype.org/service/local/repositories/releases/archive/com/squants/squants_2.11/${revision}/squants_2.11-${revision}-javadoc.jar/!") ++
+      mappingsFor("com.typesafe.akka", List("akka-actor"), "http://doc.akka.io/api/akka/${revision}/") ++
+      mappingsFor("com.typesafe.play", List("play-iteratees", "play-json"), "http://playframework.com/documentation/${revision}/api/scala/index.html", _.replaceAll("[\\d]$", "x")) ++
+      mappingsFor("org.scala-lang", List("scala-library"), "http://scala-lang.org/api/${revision}/")
 
   mappings.toMap
 }
