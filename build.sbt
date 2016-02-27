@@ -73,7 +73,8 @@ apiMappings ++= {
     } yield entry.data).head
 
   Map(
-    findManagedDependency("com.typesafe.play", "play-iteratee") -> url("http://playframework.com/documentation/2.4.x/api/scala/")
+    findManagedDependency("com.typesafe.play", "play-iteratee") -> url("http://playframework.com/documentation/2.4.x/api/scala/"),
+    findManagedDependency("com.typesafe.play", "play-json") -> url("http://playframework.com/documentation/2.4.x/api/scala/")
   )
 }
 
