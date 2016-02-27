@@ -38,7 +38,7 @@ val actual =
   ))
 
 assert(actual.toSet == expected)
-   *
+   * }}}
    */
   def materialized: List[(JsPath, JsValue)] = {
 
