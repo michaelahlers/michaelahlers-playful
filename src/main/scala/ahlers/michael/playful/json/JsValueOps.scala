@@ -11,6 +11,8 @@ class JsValueOps(value: JsValue) {
    *
    * To illustrate:
    * {{{
+import ahlers.michael.playful.json.JsValues.materialized
+
 val expected =
   Set(
     (__ \ 'foo, JsString("bear")),
@@ -34,7 +36,7 @@ val actual =
   ))
 
 actual.toSet == expected
-   * }}}
+   *
    */
   def materialized: List[(JsPath, JsValue)] = {
 
