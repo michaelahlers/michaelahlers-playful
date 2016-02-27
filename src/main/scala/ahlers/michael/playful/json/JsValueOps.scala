@@ -35,7 +35,7 @@ val actual =
     "integers" -> arr(10, 11)
   ))
 
-actual.toSet == expected
+assert(actual.toSet == expected)
    *
    */
   def materialized: List[(JsPath, JsValue)] = {
