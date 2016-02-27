@@ -45,7 +45,7 @@ libraryDependencies ++=
 
 /** Test dependencies. */
 libraryDependencies ++=
-  "com.storm-enroute" %% "scalameter" % "0.8-SNAPSHOT" % "test" ::
+  "com.storm-enroute" %% "scalameter" % "0.7" % "test" ::
     "org.scalamock" %% "scalamock-scalatest-support" % "3.2.2" % "test" ::
     "org.scalactic" %% "scalactic" % "2.2.6" % "test" ::
     "org.scalatest" %% "scalatest" % "2.2.6" % "test" ::
