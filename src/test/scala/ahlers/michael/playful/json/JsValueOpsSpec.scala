@@ -11,7 +11,7 @@ class JsValueOpsSpec
           with LazyLogging {
 
   "Non-object values" must {
-    "materialize at root" when {
+    "materialize" when {
       val exemplars =
         JsNull ::
           toJson(true) ::
@@ -34,25 +34,50 @@ class JsValueOpsSpec
     }
   }
 
-  "Shallow objects" must {
+  "Objects" must {
     "materialize" in {
       val expected =
-        __ \ 'null -> JsNull ::
-          __ \ 'boolean -> toJson(true) ::
-          __ \ 'number -> toJson(10) ::
-          __ \ 'string -> toJson("") ::
-          (__ \ 'array apply 0, toJson(10)) ::
-          (__ \ 'array apply 1, toJson(11)) ::
-          (__ \ 'array apply 2, toJson(12)) ::
+        __ \ 'foo \ 'null -> JsNull ::
+          __ \ 'foo \ 'boolean -> toJson(true) ::
+          __ \ 'bear \ 'number -> toJson(10) ::
+          __ \ 'bear \ 'string -> toJson("") ::
+          (__ \ 'foobear \ 'array apply 0, toJson(10)) ::
+          (__ \ 'foobear \ 'array apply 1, toJson(11)) ::
+          (__ \ 'foobear \ 'array apply 2, toJson(12)) ::
           Nil
 
       val actual =
         JsValues.materialized(obj(
-          "null" -> JsNull,
-          "boolean" -> true,
-          "number" -> 10,
-          "string" -> "",
-          "array" -> List(10, 11, 12)
+          "foo" -> obj(
+            "null" -> JsNull,
+            "boolean" -> true
+          ),
+          "bear" -> obj(
+            "number" -> 10,
+            "string" -> ""
+          ),
+          "foobear" -> obj(
+            "array" -> List(10, 11, 12)
+          )
+        ))
+
+      actual should contain theSameElementsAs expected
+    }
+  }
+
+  "Arrays of objects" must {
+    "materialize" in {
+      val expected =
+        (JsPath(0) \ 'foo, toJson("bear")) ::
+          (JsPath(0) \ 'fiz, toJson("ban")) ::
+          (JsPath(1) \ 'fu, toJson("bar")) ::
+          (JsPath(1) \ 'zif, toJson("nab")) ::
+          Nil
+
+      val actual =
+        JsValues.materialized(arr(
+          obj("foo" -> "bear", "fiz" -> "ban"),
+          obj("fu" -> "bar", "zif" -> "nab")
         ))
 
       actual should contain theSameElementsAs expected
