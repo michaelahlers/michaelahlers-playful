@@ -9,18 +9,18 @@ autoAPIMappings := true
 
 /** See http://stackoverflow.com/a/20919304/700420 for details. */
 apiMappings ++= {
-  val cp: Seq[Attributed[File]] = (fullClasspath in Compile).value
-
-  def findManagedDependency(organization: String, name: String): File =
-    (for {
-      entry <- cp
-      module <- entry.get(moduleID.key)
+  def findDependency(organization: String, name: String): Seq[File] =
+    for {
+      entry: Attributed[File] <- (fullClasspath in Compile).value
+      module: ModuleID <- entry.get(moduleID.key)
       if module.organization == organization
       if module.name.startsWith(name)
-    } yield entry.data).head
+    } yield entry.data
 
-  Map(
-    findManagedDependency("com.typesafe.play", "play-iteratee") -> url("http://playframework.com/documentation/2.4.x/api/scala/"),
-    findManagedDependency("com.typesafe.play", "play-json") -> url("http://playframework.com/documentation/2.4.x/api/scala/")
-  )
+  val mappings: Seq[(File, URL)] =
+  //findDependency("org.scala-lang", "scala-library").map(_ -> url(s"http://scala-lang.org/api/${scalaVersion.value}/")) ++
+    findDependency("com.typesafe.play", "play-iteratee").map(_ -> url("http://playframework.com/documentation/2.4.x/api/scala/")) ++
+      findDependency("com.typesafe.play", "play-json").map(_ -> url("http://playframework.com/documentation/2.4.x/api/scala/"))
+
+  mappings.toMap
 }
