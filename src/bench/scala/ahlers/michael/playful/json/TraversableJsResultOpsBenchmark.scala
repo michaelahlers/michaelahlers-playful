@@ -5,7 +5,7 @@ import play.api.libs.json._
 
 object TraversableJsResultOpsBenchmark extends Bench.OfflineReport {
 
-  val sizes = Gen.range("results")(25000, 100000, 25000)
+  val sizes = Gen.range("results")(100, 1000, 100)
 
   val errors: Gen[Seq[JsResult[Int]]] = for {
     size <- sizes

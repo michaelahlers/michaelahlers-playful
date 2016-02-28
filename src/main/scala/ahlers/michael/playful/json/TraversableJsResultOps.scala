@@ -9,24 +9,31 @@ import scala.language.higherKinds
 class TraversableJsResultOps[E, C[X] <: Traversable[X]](results: C[JsResult[E]]) {
 
   def marshaled(implicit cbf: CanBuildFrom[C[JsResult[E]], E, C[E]]): JsResult[C[E]] = {
-    val builder: Builder[E, C[E]] = cbf(results)
-    builder.sizeHint(results)
+    val values: Builder[E, C[E]] = cbf(results)
+    values.sizeHint(results)
 
-    results.foldLeft[JsResult[Builder[E, C[E]]]](JsSuccess(builder)) {
+    val result =
+      results.foldLeft[JsResult[Builder[E, C[E]]]](JsSuccess(values)) {
 
-      case (JsSuccess(a, _), JsSuccess(e, _)) =>
-        JsSuccess(a += e)
+        case (JsSuccess(a, _), JsSuccess(e, _)) =>
+          JsSuccess(a += e)
 
-      case (JsSuccess(a, _), e: JsError) =>
-        e
+        case (JsSuccess(a, _), e: JsError) =>
+          e
 
-      case (a: JsError, JsSuccess(e, _)) =>
-        a
+        case (a: JsError, JsSuccess(e, _)) =>
+          a
 
-      case (a: JsError, e: JsError) =>
-        JsError.merge(a, e)
+        case (a: JsError, e: JsError) =>
+          JsError(a.errors ++ e.errors)
 
-    } map (_.result())
+      }
+
+    result match {
+      case JsSuccess(v, p) => JsSuccess(v.result(), p)
+      case e: JsError => e ++ JsError(Nil)
+    }
+
   }
 
 }
