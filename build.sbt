@@ -8,11 +8,18 @@ licenses += "MIT" -> url("http://opensource.org/licenses/MIT")
 
 homepage := Some(url("http://github.com/michaelahlers/michaelahlers-playful"))
 
+startYear := Some(2016)
+
 developers :=
   Developer("michaelahlers", "Michael Ahlers", "michael@ahlers.co", url("http://michaelahlers.org")) ::
     Nil
 
-scmInfo := Some(ScmInfo(url("http://github.com/michaelahlers/michaelahlers-playful"), "git@github.com:michaelahlers/michaelahlers-playful.git"))
+scmInfo :=
+  Some(ScmInfo(
+    browseUrl = url("http://github.com/michaelahlers/michaelahlers-playful"),
+    connection = "scm:git:https://github.com:michaelahlers/michaelahlers-playful.git",
+    devConnection = Some("scm:git:git@github.com:michaelahlers/michaelahlers-playful.git")
+  ))
 
 scalaVersion := "2.11.7"
 
@@ -51,17 +58,18 @@ libraryDependencies ++=
     "org.scalatest" %% "scalatest" % "2.2.6" % "test" ::
     Nil
 
-//publishTo := Some("JFrog OSS (local snapshots)" at "http://oss.jfrog.org/artifactory/oss-snapshot-local").filter(_ => isSnapshot.value)
-
 publishMavenStyle := true
 
+/** Test artifacts are desired. */
 publishArtifact in Test := true
 
-bintrayPackage := "michaelahlers-playful"
+publishTo := {
+  val host = "https://oss.sonatype.org"
+  if (isSnapshot.value) Some("snapshots" at s"$host/content/repositories/snapshots")
+  else Some("releases" at s"$host/service/local/staging/deploy/maven2")
+}
 
-bintrayPackageLabels := Seq("scala", "play framework", "enumerators", "enumeratees", "iteratees")
-
-bintrayReleaseOnPublish := true
+pomIncludeRepository := { _ => false }
 
 lazy val Benchmark = config("bench") extend Test
 
