@@ -18,14 +18,14 @@ object EnumerateeFactoryOpsBenchmark extends Bench.OfflineReport {
   performance of "Enumeratee factories" in {
 
     measure method "joining" in {
-      using(ranges) in {
-        elements => Await.result(elements &> Enumeratees.joining(Enumerator(-1)) |>>> Iteratee.getChunks, Duration.Inf)
+      using(ranges) in { elements =>
+        Await.result(elements &> Enumeratees.joining(Enumerator(-1)) |>>> Iteratee.getChunks, Duration.Inf)
       }
     }
 
     measure method "zipWithIndex" in {
-      using(ranges) in {
-        elements => Await.result(elements &> Enumeratees.zipWithIndex |>>> Iteratee.getChunks, Duration.Inf)
+      using(ranges) in { elements =>
+        Await.result(elements &> Enumeratees.zipWithIndex |>>> Iteratee.getChunks, Duration.Inf)
       }
     }
 

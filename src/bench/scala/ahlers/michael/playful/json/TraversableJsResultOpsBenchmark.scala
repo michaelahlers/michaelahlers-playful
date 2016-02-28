@@ -22,20 +22,20 @@ object TraversableJsResultOpsBenchmark extends Bench.OfflineReport {
   performance of "Traversable result operations" in {
 
     measure method "marshaling errors" in {
-      using(errors) in {
-        results => TraversableJsResults.marshaled(results)
+      using(errors) in { results =>
+        TraversableJsResults.marshaled(results)
       }
     }
 
     measure method "marshaling mixed" in {
-      using(results) in {
-        results => TraversableJsResults.marshaled(results)
+      using(results) in { results =>
+        TraversableJsResults.marshaled(results)
       }
     }
 
     measure method "marshaling successes" in {
-      using(successes) in {
-        results => TraversableJsResults.marshaled(results)
+      using(successes) in { results =>
+        TraversableJsResults.marshaled(results)
       }
     }
 
