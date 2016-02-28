@@ -11,7 +11,7 @@ homepage := Some(url("http://github.com/michaelahlers/michaelahlers-playful"))
 startYear := Some(2016)
 
 developers :=
-  Developer("michaelahlers", "Michael Ahlers", "michael@ahlers.co", url("http://michaelahlers.org")) ::
+  Developer("michaelahlers", "Michael Ahlers", "michael@ahlers.co", url("http://github.com/michaelahlers")) ::
     Nil
 
 scmInfo :=
