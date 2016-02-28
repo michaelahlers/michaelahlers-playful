@@ -7,7 +7,7 @@ import scala.annotation.tailrec
 class JsValueOps(value: JsValue) {
 
   /**
-   * Produces a [[List]] containing materialized paths to all leaf values (*i.e.*, not [[JsObject]]). It will accept a leaf value (including [[JsArray]]), positioning it on a root path. No special processing is done to preserve order of object keys, however correct array indices are guaranteed.
+   * Produces a [[scala.List]] containing materialized paths to all leaf values (''i.e.'', not [[play.api.libs.json.JsObject]]). It will accept a leaf value (including [[play.api.libs.json.JsArray]]), positioning it on a root path. No special processing is done to preserve order of object keys, however correct array indices are guaranteed.
    *
    * To illustrate:
    * {{{
