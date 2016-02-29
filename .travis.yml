@@ -1,14 +1,14 @@
 language: scala
-
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 scala:
-  - 2.11.7
-
-# See http://scala-sbt.org/0.13/docs/Travis-CI-with-sbt.html for recommendation.
+- 2.11.7
 cache:
   sudo: false
   directories:
-    - $HOME/.ivy2/cache
-    - $HOME/.sbt/boot/
+  - $HOME/.ivy2/cache
+  - $HOME/.sbt/boot/
+env:
+  global:
+  - secure: SWUTg2OMpd5Z0cJ94TYAuoWKt4Gr1rmUmYsrq4n/orYZs+y/MRCUiUTs1Nb+a2Ryr7xF3jQKDNYZnn3OJ3vrpaPFb8wR03YwFAHvxWn/hiLHC5yt9Zfk8jdsYCrhnx8iXUxyraooHewFjKFZ6Hd92+broHYUesYP3Rg4D26MnVnSUCrllkgDThgAdRQlHdkUaNMfmnLP/azRxQaTVASCfCokWHZel+06rRisTvV5z4xJLsk8AVmarDtJUEFY1yN3P947Lwbk8GbFY3XmaEmo9g/NOUzVcYXfwOWUYpcL9mHl+lFRD6OK5fKzqMVB4Ky+Ksa5PUd0E4kFPS5Cikitg/bvFWZI8pf4oPlnYvLAOf3pTD69W8Bb6dSyXpoQC+YbQ8N0t8m6dAPxV5dgrUIMebX0Ec6psZIkrCK0z6sc/aJ4KFQa3J0SQ3aITPVPVxA1kbEPWPoGNawvNEkv+9pHZxVJl1MpI8WVaDmSr8C3pQlLBu7I9eQxXh56a+M6/wylVdOoTP8Qcq6nr19+mFlFVcb14Fp7Hk/rEAMsOmhfAPqQZWZdCJbUIedo0AomUlPAYpC8n1jYbACmhjrtnNHIwOaZb0vZ560BuhzaM38CwJZFH0FHxsMX5FronQ+gS1t/KiAMD6Jof2SWmNW3HS1ZTvw46kLh9oTf/Aw9LsLy048=
+  - secure: ym9l4smp6AFvXdl5GQ8WPzoO/54j8kAaRApWwpG55TJ4AJaJwhPZj7lEnX7QtZ9EEnVezFTyD/y0VRZsgEoo0et/oJRVLNtulmVcbBV9O0ydpvy+OwWWJeyJeSNgsFcFoJotQeCko946IBlSowHWlqlDL7SaW54iO6KNXXbeeDiFetz2SUk41ZN4hf9SRI/fi6+NGvYV00zKgU7YxTkFByjC7wwKlsrRDcHyr0GsYT3fRoMSTMFlaAWQEQ+RY6rt0yzta8hhzga4h3zx3YksJCuSfNDCvaPpSu6puIfmK+8OARkTohtZrME69DMbUEDyYYr1EOsbNyAVJNrHXoQWqc7KLXYLbKpRaCucuVr1RcMj39DJwXnkEZ766Ra3YeqcsJPmhpVjQUQA06OeChOoyouQw3wlrwrQPgvRjPzW6NVn4bxM/oK0PXX/M55EmgLv1R9Tcel1UX6k0efxTZ9QbOu7qJztAGTKoapYuyCsIlK2OqH4e7xdHn+4NYTend8o0SXGKeBUbs4rQfU8Px7tjdtDRVI3dmucppGUrLmKXzumssYJ7l+kzBuH7SyEmzTZioiuz1uaQ3beV76bBJGWgSI27OhMqQ5VrgnEYcXxcjuapVCrNjEnf392x+hwzH0m5no0oCHk1FIv/qDZkwkK4QHchaPzyYKxhDv9wNpzru0=
