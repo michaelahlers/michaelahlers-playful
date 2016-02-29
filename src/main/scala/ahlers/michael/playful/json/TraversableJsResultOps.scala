@@ -23,6 +23,7 @@ class TraversableJsResultOps[E, C[X] <: Traversable[X]](results: C[JsResult[E]])
         case (Left(a), JsSuccess(e, _)) =>
           Left(a += e)
 
+        /** See issue #3. Creates a buffer, which is more efficient than concatenating [[play.api.libs.json.JsError.errors]] when accumulating. */
         case (Left(_), e: JsError) =>
           Right(mutable.Buffer.empty ++ e.errors)
 
@@ -35,8 +36,12 @@ class TraversableJsResultOps[E, C[X] <: Traversable[X]](results: C[JsResult[E]])
       }
 
     result match {
+
       case Left(a) => JsSuccess(a.result())
+
+      /** See issue #3. This is [[play.api.libs.json.JsError.merge()]], deferred to prevent spurious grouping operations. */
       case Right(a) => JsError(a.toSeq) ++ JsError(Nil)
+
     }
 
   }
