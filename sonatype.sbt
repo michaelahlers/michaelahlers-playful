@@ -9,4 +9,4 @@ credentials ++=
       username,
       password
     )
-  })
+  }).toSeq
