@@ -1,15 +1,20 @@
 language: scala
+
 jdk:
 - oraclejdk8
+
 scala:
 - 2.11.7
+
 cache:
   sudo: false
   directories:
   - $HOME/.ivy2/cache
   - $HOME/.sbt/boot/
+
 after_success:
-- '[[ $TRAVIS_BRANCH == "master" ]] && { sbt publish; };'
+- 'sbt publish'
+
 env:
   global:
   - secure: AQRTBKLnxmCf8345ZctV3IpS9kWYBxw1REVVPP/dSNke7Fq1nHPhqtEpdWUfXVpwT+Lrti1vjCUESEWYrL5BQOl0YDflNf3hSn2widBGHUSjE36yRoZ1NG+fg5QHa3lOt2233hqiP0KlpyRmAWBkAioMZXAR0KZ+EcSe1b6uu6n+koLc0NW0imhrtYAOR6PHUbPvwrCnbmjcF8gZVN4pcXMd8qLJWuojBz7/B+6T/aebGbfIYPGv1edHKiWoWSgoHvogPTbOo01vUldhFWWMp3WPuLEzvyQD2a8yztykBos3kVq0d1e3XdTCMwjZrvDTatK9RW0nC8JFB0YFL2h/SmoBfLicTGrBNUYpIR6MOqKFQeyuLD1RO3yof1cg6NcovIzqn3bDUY3l3J+nVIHIJabaYBZJL59U6+xhDf8z+mDUwUqIQr9j9ssu7RN2MQioQxo8MBqcwX2ZphvQsYVda2JYkYIEKBGyAC5K9fmSxDdIN7pmAO+gvm9KNVYiGog6l3crnb5arKDpJdsKUGHuD0gZSCvlsjDNycwRm7ihk8kZH0wo7bSOXT6IKpV8ybF5PG9yFkMXIsBST+OIZ55UJRV0/P6qYX8P9675sK8EiLmk54lQjEB8Omi6pM5Qq9bjS/RnZvD++bn/lmS1KP6S43d2ZwUcJC1Hh7iXwv3iDJA=
