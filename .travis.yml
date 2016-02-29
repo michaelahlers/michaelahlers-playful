@@ -13,7 +13,7 @@ cache:
   - $HOME/.sbt/boot/
 
 after_success:
-- 'sbt publish'
+- test "${TRAVIS_PULL_REQUEST}" = 'false' && test "${TRAVIS_JDK_VERSION}" = 'oraclejdk8' && 'sbt publish'
 
 env:
   global:
