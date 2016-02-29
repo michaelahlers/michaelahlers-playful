@@ -10,6 +10,22 @@ import scala.language.higherKinds
 
 class TraversableJsResultOps[E, C[X] <: Traversable[X]](results: C[JsResult[E]]) {
 
+  /**
+   * Transforms collection ``C[JsResult[E]]`` to ``JsResult[C[E]]``.
+   *
+   * {{{
+import ahlers.michael.playful.json.TraversableJsResults.marshaled
+import play.api.libs.json._
+
+val numbers: List[Int] = List(1, 2, 3)
+val results: List[JsResult[Int]] = numbers.map(JsNumber(_).validate[Int])
+
+val error: JsResult[Int] = JsString("four").validate[Int]
+
+assert(JsSuccess(numbers) == marshaled(results))
+assert(marshaled(results :+ error).isError)
+   * }}}
+   */
   def marshaled(implicit cbf: CanBuildFrom[C[JsResult[E]], E, C[E]]): JsResult[C[E]] = {
 
     type Error = (JsPath, Seq[ValidationError])
