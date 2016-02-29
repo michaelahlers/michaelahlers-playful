@@ -33,3 +33,14 @@ apiMappings ++= {
 
   mappings.toMap
 }
+
+apiURL := {
+  val host = "https://oss.sonatype.org"
+  val path = s"${organization.value.replace('.', '/')}/${name.value}_${scalaBinaryVersion.value}/${version.value}/${name.value}_${scalaBinaryVersion.value}-${version.value}-javadoc.jar/!/index.html"
+
+  val location =
+    if (isSnapshot.value) url(s"$host/service/local/repositories/snapshots/archive/$path")
+    else url(s"$host/service/local/repositories/releases/archive/$path")
+
+  Some(location)
+}
