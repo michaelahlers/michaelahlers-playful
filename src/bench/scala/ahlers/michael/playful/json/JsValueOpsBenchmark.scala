@@ -13,7 +13,7 @@ object JsValueOpsBenchmark extends Bench.OfflineReport {
 
   val deep: Gen[JsValue] = for {
     size <- sizes
-  } yield (size until 0).foldLeft[JsValue](JsString("value")) { case (a, i) => JsObject(List(s"path$i" -> a)) }
+  } yield (size until 0 by -1).foldLeft[JsValue](JsString("value")) { case (a, i) => JsObject(List(s"path$i" -> a)) }
 
   performance of "Value operations" in {
 
