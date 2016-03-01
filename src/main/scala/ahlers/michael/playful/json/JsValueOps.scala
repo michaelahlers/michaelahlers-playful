@@ -3,6 +3,7 @@ package ahlers.michael.playful.json
 import play.api.libs.json._
 
 import scala.annotation.tailrec
+import scala.collection.mutable
 
 class JsValueOps(value: JsValue) {
 
@@ -43,7 +44,7 @@ assert(actual.toSet == expected)
   def materialized: List[(JsPath, JsValue)] = {
 
     @tailrec
-    def traverse(queue: List[(JsPath, JsValue)], results: List[(JsPath, JsValue)]): List[(JsPath, JsValue)] =
+    def traverse(queue: List[(JsPath, JsValue)], results: mutable.Buffer[(JsPath, JsValue)]): List[(JsPath, JsValue)] =
       queue match {
 
         case (prefix: JsPath, JsObject(fields)) :: tail =>
@@ -53,14 +54,14 @@ assert(actual.toSet == expected)
           traverse(tail ++ elements.zipWithIndex.map({ case (v, i) => prefix(i) -> v }), results)
 
         case head :: tail =>
-          traverse(tail, results :+ head)
+          traverse(tail, results += head)
 
         case Nil =>
-          results
+          results.toList
 
       }
 
-    traverse(List(__ -> value), Nil)
+    traverse(List(__ -> value), mutable.Buffer.empty)
 
   }
 
