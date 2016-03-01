@@ -5,7 +5,7 @@ import play.api.libs.json._
 
 object JsValueOpsBenchmark extends Bench.OfflineReport {
 
-  val sizes = Gen.range("results")(100, 1000, 100)
+  val sizes = Gen.range("results")(10000, 100000, 10000)
 
   val flat: Gen[JsValue] = for {
     size <- sizes

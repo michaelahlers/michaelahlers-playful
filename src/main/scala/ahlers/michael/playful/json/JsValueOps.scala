@@ -3,7 +3,6 @@ package ahlers.michael.playful.json
 import play.api.libs.json._
 
 import scala.annotation.tailrec
-import scala.collection.mutable
 
 class JsValueOps(value: JsValue) {
 
@@ -43,32 +42,26 @@ assert(actual.toSet == expected)
    */
   def materialized: List[(JsPath, JsValue)] = {
 
-    val queue: mutable.Queue[(JsPath, JsValue)] = mutable.Queue(__ -> value)
-    val results: mutable.Buffer[(JsPath, JsValue)] = mutable.Buffer.empty
-
     @tailrec
-    def traverse(): List[(JsPath, JsValue)] =
-      if (queue.isEmpty) {
-        results.toList
-      } else {
-        queue.dequeue match {
+    def traverse(queue: Seq[(Seq[PathNode], JsValue)], results: Seq[(JsPath, JsValue)]): List[(JsPath, JsValue)] =
+      queue.headOption match {
 
-          case (prefix: JsPath, JsObject(fields)) =>
-            queue ++= fields.map({ case (k, v) => prefix \ k -> v })
-            traverse()
+        case Some((prefix, JsObject(fields))) =>
+          traverse(queue.drop(1) ++ fields.map({ case (k, v) => (prefix :+ KeyPathNode(k)) -> v }), results)
 
-          case (prefix: JsPath, JsArray(elements)) =>
-            queue ++= elements.zipWithIndex.map({ case (v, i) => prefix(i) -> v })
-            traverse()
+        case Some((prefix, JsArray(elements))) =>
+          traverse(queue.drop(1) ++ elements.zipWithIndex.map({ case (v, i) => (prefix :+ IdxPathNode(i)) -> v }), results)
 
-          case head =>
-            results += head
-            traverse()
+        case Some((prefix, leaf)) =>
+          traverse(queue.drop(1), results :+ JsPath(prefix.toList) -> leaf)
 
-        }
+        case None =>
+          results.toList
+
       }
 
-    traverse()
+    /** Using [[scala.Vector]], with [[http://docs.scala-lang.org/overviews/collections/performance-characteristics near-constant performance for head, tail, and append operations]], is fast enough for our purposes.  */
+    traverse(Vector(Vector.empty -> value), Vector.empty)
 
   }
 
