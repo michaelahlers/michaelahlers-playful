@@ -17,7 +17,7 @@ resolvers += "Sonatype OSS (releases)" at "https://oss.sonatype.org/content/repo
 resolvers += "Sonatype OSS (snapshots)" at "https://oss.sonatype.org/content/repositories/snapshots"
 ```
 
-And include
+And add Playful to your dependencies:
 
 ```scala
 libraryDependencies += "com.github.michaelahlers" %% "playful" % "0.1.1-SNAPSHOT"
