@@ -28,7 +28,7 @@ class JsValueOpsSpec
               case _ => List(__ -> exemplar)
             }
 
-          JsValues.materialized(exemplar) should be(expected)
+          JsValues.materialized(exemplar) should contain theSameElementsAs expected
         }
       }
     }
