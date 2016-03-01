@@ -43,25 +43,32 @@ assert(actual.toSet == expected)
    */
   def materialized: List[(JsPath, JsValue)] = {
 
+    val queue: mutable.Queue[(JsPath, JsValue)] = mutable.Queue(__ -> value)
+    val results: mutable.Buffer[(JsPath, JsValue)] = mutable.Buffer.empty
+
     @tailrec
-    def traverse(queue: List[(JsPath, JsValue)], results: mutable.Buffer[(JsPath, JsValue)]): List[(JsPath, JsValue)] =
-      queue match {
+    def traverse(): List[(JsPath, JsValue)] =
+      if (queue.isEmpty) {
+        results.toList
+      } else {
+        queue.dequeue match {
 
-        case (prefix: JsPath, JsObject(fields)) :: tail =>
-          traverse(tail ++ fields.map({ case (k, v) => prefix \ k -> v }), results)
+          case (prefix: JsPath, JsObject(fields)) =>
+            queue ++= fields.map({ case (k, v) => prefix \ k -> v })
+            traverse()
 
-        case (prefix: JsPath, JsArray(elements)) :: tail =>
-          traverse(tail ++ elements.zipWithIndex.map({ case (v, i) => prefix(i) -> v }), results)
+          case (prefix: JsPath, JsArray(elements)) =>
+            queue ++= elements.zipWithIndex.map({ case (v, i) => prefix(i) -> v })
+            traverse()
 
-        case head :: tail =>
-          traverse(tail, results += head)
+          case head =>
+            results += head
+            traverse()
 
-        case Nil =>
-          results.toList
-
+        }
       }
 
-    traverse(List(__ -> value), mutable.Buffer.empty)
+    traverse()
 
   }
 
