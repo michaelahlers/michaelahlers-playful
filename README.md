@@ -10,20 +10,17 @@ Everything you'll find here will be tested and considered production-ready (desp
 
 ## Installation
 
-Release binaries are hosted on the author's own [Bintray](http://bintray.com) repository (with artifacts coming soon to a central directory).
-
-Include the following in your SBT configuration:
+Release binaries are by [Sonatype](http://oss.sonatype.org). If not already present, add these resolvers to your SBT project configuration:
 
 ```scala
-// ...
+resolvers += "Sonatype OSS (releases)" at "https://oss.sonatype.org/content/repositories/releases"
+resolvers += "Sonatype OSS (snapshots)" at "https://oss.sonatype.org/content/repositories/snapshots"
+```
 
-resolvers += "Michael Ahlers (releases)" at "https://dl.bintray.com/michaelahlers/maven/"
+And include
 
-// ...
-
-libraryDependencies += "ahlers.michael" %% "playful" % "0.0.1"
-
-// ...
+```scala
+libraryDependencies += "com.github.michaelahlers" %% "playful" % "0.1.1-SNAPSHOT"
 ```
 
 ## Development
