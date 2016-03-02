@@ -1,5 +1,6 @@
 package ahlers.michael.playful.json
 
+import play.api.libs.json.Json.{arr, obj}
 import play.api.libs.json._
 
 import scala.annotation.tailrec
@@ -48,10 +49,12 @@ assert(actual.toSet == expected)
       queue match {
 
         case (prefix, JsObject(fields)) :: tail =>
-          traverse(fields.map({ case (k, v) => (prefix :+ KeyPathNode(k)) -> v }) ++: tail, results)
+          if (fields.isEmpty) traverse(tail, (JsPath(prefix.toList), obj()) +: results)
+          else traverse(fields.map({ case (k, v) => (prefix :+ KeyPathNode(k)) -> v }) ++: tail, results)
 
         case (prefix, JsArray(elements)) :: tail =>
-          traverse(elements.zipWithIndex.map({ case (v, i) => (prefix :+ IdxPathNode(i)) -> v }) ++: tail, results)
+          if (elements.isEmpty) traverse(tail, (JsPath(prefix.toList), arr()) +: results)
+          else traverse(elements.zipWithIndex.map({ case (v, i) => (prefix :+ IdxPathNode(i)) -> v }) ++: tail, results)
 
         case (prefix, leaf) :: tail =>
           traverse(tail, (JsPath(prefix.toList), leaf) +: results)
