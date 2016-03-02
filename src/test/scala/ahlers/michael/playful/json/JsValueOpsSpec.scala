@@ -41,7 +41,7 @@ class JsValueOpsSpec
 
     "passed objects" must {
 
-      "put leaf-values on key paths" in {
+      "put leaf values on key paths" in {
         val expected =
           __ \ 'foo \ 'null -> JsNull ::
             __ \ 'foo \ 'boolean -> toJson(true) ::
@@ -58,6 +58,23 @@ class JsValueOpsSpec
             "bear" -> obj(
               "number" -> 10,
               "string" -> ""
+            )
+          ))
+
+        actual should contain theSameElementsAs expected
+      }
+
+      "put empty leaf values on key paths" in {
+        val expected =
+          __ \ 'empty \ 'object -> obj() ::
+            __ \ 'empty \ 'array -> arr() ::
+            Nil
+
+        val actual =
+          JsValues.materialized(obj(
+            "empty" -> obj(
+              "object" -> obj(),
+              "array" -> arr()
             )
           ))
 
@@ -85,7 +102,7 @@ class JsValueOpsSpec
 
     "passed arrays of objects" must {
 
-      "put leaf-values on keyed paths at indexes" in {
+      "put leaf values on keyed paths at indexes" in {
         val expected =
           (JsPath(0) \ 'foo, toJson("bear")) ::
             (JsPath(0) \ 'fiz, toJson("ban")) ::
