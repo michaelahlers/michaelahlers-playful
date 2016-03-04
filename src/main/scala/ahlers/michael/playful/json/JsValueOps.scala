@@ -2,11 +2,15 @@ package ahlers.michael.playful.json
 
 import play.api.libs.json.Json.{arr, obj}
 import play.api.libs.json._
-
+import Json._
 import scala.annotation.tailrec
 import scala.collection.immutable.Queue
 
 class JsValueOps(value: JsValue) {
+
+  def collapsed[T <: JsValue](value: T): Option[T] = masked(value, JsNull, obj())
+
+  def masked[T <: JsValue](value: T, masks: JsValue*): Option[T] = ???
 
   /**
    * Produces a [[scala.List]] containing materialized paths to all leaf values (''i.e.'', not [[play.api.libs.json.JsObject]]). It will accept a leaf value (including [[play.api.libs.json.JsArray]]), positioning it on a root path. No special processing is done to preserve order of object keys, however correct array indices are guaranteed.
