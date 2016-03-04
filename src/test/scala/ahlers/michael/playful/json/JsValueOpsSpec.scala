@@ -10,10 +10,6 @@ class JsValueOpsSpec
           with Matchers
           with LazyLogging {
 
-  "Collapsed" when {
-
-  }
-
   "Materialized" when {
 
     "passed non-objects" must {
