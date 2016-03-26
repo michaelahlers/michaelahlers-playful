@@ -14,33 +14,33 @@ class JsValueOps(value: JsValue) {
    *
    * To illustrate:
    * {{{
-import ahlers.michael.playful.json.JsValues.materialized
-import play.api.libs.json.Json._
-import play.api.libs.json._
-
-val expected =
-  Set(
-    (__ \ 'foo, JsString("bear")),
-    (__ \ 'integers apply 0, JsNumber(10)),
-    (__ \ 'integers apply 1, JsNumber(11)),
-    (__ \ 'fiz \ 'ban \ 'zif, JsString("nab")),
-    (__ \ 'fiz \ 'ban \ 'integers apply 0, JsNumber(100)),
-    (__ \ 'fiz \ 'ban \ 'integers apply 1, JsNumber(101))
-  )
-
-val actual =
-  materialized(obj(
-    "foo" -> "bear",
-    "fiz" -> obj(
-      "ban" -> obj(
-        "zif" -> "nab",
-        "integers" -> arr(100, 101)
-      )
-    ),
-    "integers" -> arr(10, 11)
-  ))
-
-assert(actual.toSet == expected)
+   * import ahlers.michael.playful.json.JsValues.materialized
+   * import play.api.libs.json.Json._
+   * import play.api.libs.json._
+   * *
+  val expected =
+   * Set(
+   * (__ \ 'foo, JsString("bear")),
+   * (__ \ 'integers apply 0, JsNumber(10)),
+   * (__ \ 'integers apply 1, JsNumber(11)),
+   * (__ \ 'fiz \ 'ban \ 'zif, JsString("nab")),
+   * (__ \ 'fiz \ 'ban \ 'integers apply 0, JsNumber(100)),
+   * (__ \ 'fiz \ 'ban \ 'integers apply 1, JsNumber(101))
+   * )
+   * *
+  val actual =
+   * materialized(obj(
+   * "foo" -> "bear",
+   * "fiz" -> obj(
+   * "ban" -> obj(
+   * "zif" -> "nab",
+   * "integers" -> arr(100, 101)
+   * )
+   * ),
+   * "integers" -> arr(10, 11)
+   * ))
+   * *
+  assert(actual.toSet == expected)
    * }}}
    */
   def materialized: List[(JsPath, JsValue)] = {
@@ -87,16 +87,7 @@ assert(actual.toSet == expected)
       assignment => {
 
         case JsArray(elements) =>
-          JsArray(
-            elements
-              .zipWithIndex
-              .map({ case (v, i) => i -> v })
-              .toMap
-              .updated(index, assignment)
-              .toList
-              .sortBy({ case (i, _) => i })
-              .map({ case (_, v) => v })
-          )
+          JsArray((elements.take(index) :+ assignment) ++ elements.drop(index + 1))
 
         case _ =>
           JsArray(assignment :: Nil)
