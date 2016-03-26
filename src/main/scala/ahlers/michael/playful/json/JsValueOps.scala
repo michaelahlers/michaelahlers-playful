@@ -68,4 +68,6 @@ assert(actual.toSet == expected)
 
   }
 
+  def updated[T](path: JsPath, assignment: T)(implicit w: Writes[T]): JsValue = ???
+
 }

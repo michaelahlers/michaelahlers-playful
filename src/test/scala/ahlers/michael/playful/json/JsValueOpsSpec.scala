@@ -123,4 +123,197 @@ class JsValueOpsSpec
 
   }
 
+  "Updated" when {
+
+    "path is root" must {
+
+      "return assignment value" in {
+        val expected = JsString("expected")
+        val actual = JsValues.updated(obj("foo" -> "bear", "fiz" -> "ban"), __, expected)
+        actual should be(expected)
+      }
+
+    }
+
+    "path is unset at no depth" must {
+
+      "append values to objects" in {
+        val expected = obj("foo" -> "bear", "fiz" -> "ban")
+        val actual = JsValues.updated(obj("foo" -> "bear"), __ \ 'fiz, "ban")
+        actual should be(expected)
+      }
+
+    }
+
+    "path is unset at arbitrary depth" must {
+
+      "append values to objects" in {
+        val exemplar =
+          obj(
+            "foo" -> "bear",
+            "one" -> obj(
+              "two" -> obj(
+                "five" -> "Three, sir! Three!"
+              )
+            )
+          )
+
+        val expected =
+          obj(
+            "foo" -> "bear",
+            "one" -> obj(
+              "two" -> obj(
+                "three" -> 123
+              )
+            )
+          )
+
+        val actual = JsValues.updated(exemplar, __ \ 'one \ 'two \ 'three, 123)
+        actual should be(expected)
+      }
+
+    }
+
+    "path is set at no depth" must {
+
+      "append values to objects" in {
+        val expected = obj("foo" -> "bear")
+        val actual = JsValues.updated(obj("foo" -> "BAR"), __ \ 'foo, "bear")
+        actual should be(expected)
+      }
+
+    }
+
+    "path is set at arbitrary depth" must {
+
+      "append values to objects" in {
+        val exemplar =
+          obj(
+            "foo" -> "bear",
+            "one" -> obj(
+              "two" -> obj(
+                "three" -> 456
+              )
+            )
+          )
+
+        val expected =
+          obj(
+            "foo" -> "bear",
+            "one" -> obj(
+              "two" -> obj(
+                "three" -> 123
+              )
+            )
+          )
+
+        val actual = JsValues.updated(exemplar, __ \ 'one \ 'two \ 'three, 123)
+        actual should be(expected)
+      }
+
+    }
+
+    "path is unset at leaf array indexes" must {
+
+      "append values to arrays" in {
+        val exemplar =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr("fizban")
+          )
+
+        val expected =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr("fizban", "zifnab")
+          )
+
+        val actual = JsValues.updated(exemplar, (__ \ 'array) apply 1, "zifnab")
+        actual should be(expected)
+      }
+
+    }
+
+    "path is set at leaf array indexes" must {
+
+      "append values to arrays" in {
+        val exemplar =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr("fizban")
+          )
+
+        val expected =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr("zifnab")
+          )
+
+        val actual = JsValues.updated(exemplar, (__ \ 'array) apply 0, "zifnab")
+        actual should be(expected)
+      }
+
+    }
+
+    "path is unset at internal array indexes" must {
+
+      "append values to arrays" in {
+        val exemplar =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr(
+              obj(
+                "common" -> "fizban"
+              )
+            )
+          )
+
+        val expected =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr(
+              obj(
+                "common" -> "fizban",
+                "AKA" -> "zifnab"
+              )
+            )
+          )
+
+        val actual = JsValues.updated(exemplar, ((__ \ 'array) apply 1) \ 'AKA, "zifnab")
+        actual should be(expected)
+      }
+
+    }
+
+    "path is set at internal array indexes" must {
+
+      "append values to arrays" in {
+        val exemplar =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr(
+              obj(
+                "common" -> "fizban"
+              )
+            )
+          )
+
+        val expected =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr(
+              obj(
+                "common" -> "zifnab"
+              )
+            )
+          )
+
+        val actual = JsValues.updated(exemplar, ((__ \ 'array) apply 1) \ 'common, "zifnab")
+        actual should be(expected)
+      }
+
+    }
+
+  }
+
 }
