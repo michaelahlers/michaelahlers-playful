@@ -61,6 +61,17 @@ libraryDependencies ++=
     "com.typesafe.play" %% "play-test" % "2.4.6" % "test" ::
     Nil
 
+/** As of March 26, 2016, this supports issue #9 (value assignment as arbitrary `JsPath`) and may be eventually removed to reduce dependencies. */
+val monocleLibraryVersion = "1.2.0"
+libraryDependencies ++=
+  "com.github.julien-truffaut" %% "monocle-core" % monocleLibraryVersion ::
+    //"com.github.julien-truffaut" %% "monocle-generic" % monocleLibraryVersion ::
+    //"com.github.julien-truffaut" %% "monocle-macro" % monocleLibraryVersion ::
+    //"com.github.julien-truffaut" %% "monocle-state" % monocleLibraryVersion ::
+    //"com.github.julien-truffaut" %% "monocle-refined" % monocleLibraryVersion ::
+    //"com.github.julien-truffaut" %% "monocle-law" % monocleLibraryVersion % "test" ::
+    Nil
+
 publishMavenStyle := true
 
 /** Test artifacts are desired. */

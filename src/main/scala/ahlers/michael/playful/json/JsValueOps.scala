@@ -1,5 +1,6 @@
 package ahlers.michael.playful.json
 
+import monocle._
 import play.api.libs.json.Json.{arr, obj}
 import play.api.libs.json._
 
@@ -68,6 +69,70 @@ assert(actual.toSet == expected)
 
   }
 
-  def updated[T](path: JsPath, assignment: T)(implicit w: Writes[T]): JsValue = ???
+  def updated[T](path: JsPath, assignment: T)(implicit w: Writes[T]): JsValue = {
+
+    def JsObjectLens(field: String, default: => JsValue) = Lens[JsValue, JsValue](_ \ field getOrElse default) {
+      assignment => {
+
+        case JsObject(fields) =>
+          JsObject(fields.updated(field, assignment).toList)
+
+        case _ =>
+          obj(field -> assignment)
+
+      }
+    }
+
+    def JsArrayLens(index: Int, default: => JsValue) = Lens[JsValue, JsValue](_ apply index getOrElse default) {
+      assignment => {
+
+        case JsArray(elements) =>
+          JsArray(
+            elements
+              .zipWithIndex
+              .map({ case (v, i) => i -> v })
+              .toMap
+              .updated(index, assignment)
+              .toList
+              .sortBy({ case (i, _) => i })
+              .map({ case (_, v) => v })
+          )
+
+        case _ =>
+          JsArray(assignment :: Nil)
+
+      }
+    }
+
+    @tailrec
+    def lens(queue: List[PathNode], result: Lens[JsValue, JsValue]): Lens[JsValue, JsValue] =
+      queue match {
+
+        case Nil =>
+          result
+
+        case KeyPathNode(field) :: Nil =>
+          result composeLens JsObjectLens(field, obj())
+
+        case IdxPathNode(index) :: Nil =>
+          result composeLens JsArrayLens(index, arr())
+
+        case KeyPathNode(field) :: (next: KeyPathNode) :: tail =>
+          lens(next :: tail, result composeLens JsObjectLens(field, obj()))
+
+        case KeyPathNode(field) :: (next: IdxPathNode) :: tail =>
+          lens(next :: tail, result composeLens JsObjectLens(field, arr()))
+
+        case IdxPathNode(index) :: (next: KeyPathNode) :: tail =>
+          lens(next :: tail, result composeLens JsArrayLens(index, obj()))
+
+        case IdxPathNode(index) :: (next: IdxPathNode) :: tail =>
+          lens(next :: tail, result composeLens JsArrayLens(index, arr()))
+
+      }
+
+    lens(path.path, Lens.id) set w.writes(assignment) apply value
+
+  }
 
 }
