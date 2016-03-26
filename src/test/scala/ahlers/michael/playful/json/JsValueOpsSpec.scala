@@ -163,7 +163,8 @@ class JsValueOpsSpec
             "foo" -> "bear",
             "one" -> obj(
               "two" -> obj(
-                "three" -> 123
+                "three" -> 123,
+                "five" -> "Three, sir! Three!"
               )
             )
           )
@@ -228,7 +229,7 @@ class JsValueOpsSpec
             "names" -> arr("fizban", "zifnab")
           )
 
-        val actual = JsValues.updated(exemplar, (__ \ 'array) apply 1, "zifnab")
+        val actual = JsValues.updated(exemplar, (__ \ 'names) apply 1, "zifnab")
         actual should be(expected)
       }
 
@@ -249,7 +250,7 @@ class JsValueOpsSpec
             "names" -> arr("zifnab")
           )
 
-        val actual = JsValues.updated(exemplar, (__ \ 'array) apply 0, "zifnab")
+        val actual = JsValues.updated(exemplar, (__ \ 'names) apply 0, "zifnab")
         actual should be(expected)
       }
 
@@ -279,7 +280,7 @@ class JsValueOpsSpec
             )
           )
 
-        val actual = JsValues.updated(exemplar, ((__ \ 'array) apply 1) \ 'AKA, "zifnab")
+        val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 0) \ 'AKA, "zifnab")
         actual should be(expected)
       }
 
@@ -308,7 +309,7 @@ class JsValueOpsSpec
             )
           )
 
-        val actual = JsValues.updated(exemplar, ((__ \ 'array) apply 1) \ 'common, "zifnab")
+        val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 0) \ 'common, "zifnab")
         actual should be(expected)
       }
 
