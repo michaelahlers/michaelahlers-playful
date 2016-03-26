@@ -216,7 +216,24 @@ class JsValueOpsSpec
 
     "path is unset at leaf array indexes" must {
 
-      "append values to arrays" in {
+      "append values to arrays after last element" in {
+        val exemplar =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr("fizban")
+          )
+
+        val expected =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr("fizban", "zifnab")
+          )
+
+        val actual = JsValues.updated(exemplar, (__ \ 'names) apply 1, "zifnab")
+        actual should be(expected)
+      }
+
+      "append values to arrays past last element" in {
         val exemplar =
           obj(
             "foo" -> "bear",
@@ -251,6 +268,23 @@ class JsValueOpsSpec
           )
 
         val actual = JsValues.updated(exemplar, (__ \ 'names) apply 0, "zifnab")
+        actual should be(expected)
+      }
+
+      "replace values in arrays between elements" in {
+        val exemplar =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr("fizban","huma","zifnab")
+          )
+
+        val expected =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr("fizban","paladine","zifnab")
+          )
+
+        val actual = JsValues.updated(exemplar, (__ \ 'names) apply 1, "paladine")
         actual should be(expected)
       }
 
