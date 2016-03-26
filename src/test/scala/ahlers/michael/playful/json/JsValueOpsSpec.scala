@@ -275,13 +275,13 @@ class JsValueOpsSpec
         val exemplar =
           obj(
             "foo" -> "bear",
-            "names" -> arr("fizban","huma","zifnab")
+            "names" -> arr("fizban", "huma", "zifnab")
           )
 
         val expected =
           obj(
             "foo" -> "bear",
-            "names" -> arr("fizban","paladine","zifnab")
+            "names" -> arr("fizban", "paladine", "zifnab")
           )
 
         val actual = JsValues.updated(exemplar, (__ \ 'names) apply 1, "paladine")
