@@ -229,7 +229,7 @@ class JsValueOpsSpec
             "names" -> arr("fizban", "zifnab")
           )
 
-        val actual = JsValues.updated(exemplar, (__ \ 'names) apply 1, "zifnab")
+        val actual = JsValues.updated(exemplar, (__ \ 'names) apply 10, "zifnab")
         actual should be(expected)
       }
 
@@ -237,7 +237,7 @@ class JsValueOpsSpec
 
     "path is set at leaf array indexes" must {
 
-      "append values to arrays" in {
+      "replace values in arrays" in {
         val exemplar =
           obj(
             "foo" -> "bear",
@@ -258,7 +258,7 @@ class JsValueOpsSpec
 
     "path is unset at internal array indexes" must {
 
-      "append values to arrays" in {
+      "append values to objects" in {
         val exemplar =
           obj(
             "foo" -> "bear",
@@ -288,7 +288,7 @@ class JsValueOpsSpec
 
     "path is set at internal array indexes" must {
 
-      "append values to arrays" in {
+      "replace values" in {
         val exemplar =
           obj(
             "foo" -> "bear",
@@ -310,6 +310,62 @@ class JsValueOpsSpec
           )
 
         val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 0) \ 'common, "zifnab")
+        actual should be(expected)
+      }
+
+    }
+
+    "object path is set as array" must {
+
+      "replace values" in {
+        val exemplar =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr(
+              obj(
+                "common" -> "fizban"
+              )
+            )
+          )
+
+        val expected =
+          obj(
+            "foo" -> "bear",
+            "names" ->
+              obj(
+                "DG" -> "zifnab"
+              )
+          )
+
+        val actual = JsValues.updated(exemplar, __ \ 'names \ 'DG, "zifnab")
+        actual should be(expected)
+      }
+
+    }
+
+    "array path is set as object" must {
+
+      "replace values" in {
+        val exemplar =
+          obj(
+            "foo" -> "bear",
+            "names" ->
+              obj(
+                "DG" -> "zifnab"
+              )
+          )
+
+        val expected =
+          obj(
+            "foo" -> "bear",
+            "names" -> arr(
+              obj(
+                "common" -> "fizban"
+              )
+            )
+          )
+
+        val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 0) \ 'common, "fizban")
         actual should be(expected)
       }
 
