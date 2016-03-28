@@ -69,9 +69,12 @@ assert(actual.toSet == expected)
 
   }
 
+  /**
+   * Returns a [[play.api.libs.json.JsValue]] reflecting the given updates.
+   */
   def updated[T](path: JsPath, value: T)(implicit w: Writes[T]): JsValue = {
 
-    def JsObjectLens(field: String, default: => JsValue) = Lens[JsValue, JsValue](_ \ field getOrElse default) {
+    def KeyPathLens(field: String, alternate: JsValue) = Lens[JsValue, JsValue](_ \ field getOrElse alternate) {
       assignment => {
 
         case JsObject(fields) =>
@@ -83,7 +86,7 @@ assert(actual.toSet == expected)
       }
     }
 
-    def JsArrayLens(index: Int, default: => JsValue) = Lens[JsValue, JsValue](_ apply index getOrElse default) {
+    def IndexPathLens(index: Int, alternate: JsValue) = Lens[JsValue, JsValue](_ apply index getOrElse alternate) {
       assignment => {
 
         case JsArray(elements) =>
@@ -95,34 +98,32 @@ assert(actual.toSet == expected)
       }
     }
 
+    def toAlternate: PartialFunction[PathNode, JsValue] = {
+      case KeyPathNode(_) => obj()
+      case IdxPathNode(_) => arr()
+    }
+
     @tailrec
-    def lens(queue: List[PathNode], result: Lens[JsValue, JsValue]): Lens[JsValue, JsValue] =
+    def follow(queue: List[PathNode], result: Lens[JsValue, JsValue]): Lens[JsValue, JsValue] =
       queue match {
 
         case Nil =>
           result
 
-        case KeyPathNode(field) :: Nil =>
-          result composeLens JsObjectLens(field, obj())
+        case KeyPathNode(field) :: tail =>
+          val alternate: JsValue = tail.headOption map toAlternate getOrElse obj()
+          follow(tail, result composeLens KeyPathLens(field, alternate))
 
-        case IdxPathNode(index) :: Nil =>
-          result composeLens JsArrayLens(index, arr())
+        case IdxPathNode(index) :: tail =>
+          val alternate: JsValue = tail.headOption map toAlternate getOrElse arr()
+          follow(tail, result composeLens IndexPathLens(index, alternate))
 
-        case KeyPathNode(field) :: (next: KeyPathNode) :: tail =>
-          lens(next :: tail, result composeLens JsObjectLens(field, obj()))
-
-        case KeyPathNode(field) :: (next: IdxPathNode) :: tail =>
-          lens(next :: tail, result composeLens JsObjectLens(field, arr()))
-
-        case IdxPathNode(index) :: (next: KeyPathNode) :: tail =>
-          lens(next :: tail, result composeLens JsArrayLens(index, obj()))
-
-        case IdxPathNode(index) :: (next: IdxPathNode) :: tail =>
-          lens(next :: tail, result composeLens JsArrayLens(index, arr()))
+        case RecursiveSearch(_) :: tail =>
+          throw new IllegalArgumentException(s"""No meaningful update may be applied for paths containing a recursive search.""")
 
       }
 
-    lens(path.path, Lens.id) set w.writes(value) apply subject
+    follow(path.path, Lens.id) set w.writes(value) apply subject
 
   }
 
