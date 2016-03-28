@@ -4,12 +4,14 @@ scalacOptions in(Compile, doc) ++=
   "-author" ::
     "-groups" ::
     "-implicits" ::
+    "-no-link-warnings" ::
     Nil
 
 scalacOptions in(Test, doc) ++=
   "-author" ::
     "-groups" ::
     "-implicits" ::
+    "-no-link-warnings" ::
     Nil
 
 /** See http://scala-sbt.org/0.13/docs/Howto-Scaladoc.html for details. */
