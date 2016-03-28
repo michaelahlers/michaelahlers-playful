@@ -3,7 +3,7 @@ package ahlers.michael.playful
 import play.api.libs.json.{JsPath, JsResult, JsValue, Writes}
 
 import scala.collection.generic.CanBuildFrom
-import scala.language.higherKinds
+import scala.language.{higherKinds, implicitConversions}
 
 package object json {
 
@@ -11,7 +11,7 @@ package object json {
 
     def materialized(value: JsValue): List[(JsPath, JsValue)] = syntax.withJsValueOps(value).materialized
 
-    def updated[T](value: JsValue, path: JsPath, assignment: T)(implicit w: Writes[T]): JsValue = syntax.withJsValueOps(value).updated(path, assignment)
+    def updated(value: JsValue, updates: (JsPath, JsValueWrapper)*): JsValue = syntax.withJsValueOps(value).updated(updates: _*)
 
   }
 
@@ -21,5 +21,7 @@ package object json {
       syntax.withTraversableJsResultOps(results).marshaled
 
   }
+
+  implicit def toValueJsValueWrapper[T](field: T)(implicit w: Writes[T]): JsValueWrapper = JsValueWrapperImpl(w.writes(field))
 
 }
