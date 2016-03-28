@@ -129,7 +129,7 @@ class JsValueOpsSpec
 
       "return assignment value" in {
         val expected = JsString("expected")
-        val actual = JsValues.updated(obj("foo" -> "bear", "fiz" -> "ban"), __, expected)
+        val actual = JsValues.updated(obj("foo" -> "bear", "fiz" -> "ban"), __ -> expected)
         actual should be(expected)
       }
 
@@ -139,7 +139,7 @@ class JsValueOpsSpec
 
       "append values to objects" in {
         val expected = obj("foo" -> "bear", "fiz" -> "ban")
-        val actual = JsValues.updated(obj("foo" -> "bear"), __ \ 'fiz, "ban")
+        val actual = JsValues.updated(obj("foo" -> "bear"), __ \ 'fiz -> "ban")
         actual should be(expected)
       }
 
@@ -169,7 +169,7 @@ class JsValueOpsSpec
             )
           )
 
-        val actual = JsValues.updated(exemplar, __ \ 'one \ 'two \ 'three, 123)
+        val actual = JsValues.updated(exemplar, __ \ 'one \ 'two \ 'three -> 123)
         actual should be(expected)
       }
 
@@ -179,7 +179,7 @@ class JsValueOpsSpec
 
       "append values to objects" in {
         val expected = obj("foo" -> "bear")
-        val actual = JsValues.updated(obj("foo" -> "BAR"), __ \ 'foo, "bear")
+        val actual = JsValues.updated(obj("foo" -> "BAR"), __ \ 'foo -> "bear")
         actual should be(expected)
       }
 
@@ -208,7 +208,7 @@ class JsValueOpsSpec
             )
           )
 
-        val actual = JsValues.updated(exemplar, __ \ 'one \ 'two \ 'three, 123)
+        val actual = JsValues.updated(exemplar, __ \ 'one \ 'two \ 'three -> 123)
         actual should be(expected)
       }
 
@@ -229,7 +229,7 @@ class JsValueOpsSpec
             "names" -> arr("fizban", "zifnab")
           )
 
-        val actual = JsValues.updated(exemplar, (__ \ 'names) apply 1, "zifnab")
+        val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 1) -> "zifnab")
         actual should be(expected)
       }
 
@@ -246,7 +246,7 @@ class JsValueOpsSpec
             "names" -> arr("fizban", "zifnab")
           )
 
-        val actual = JsValues.updated(exemplar, (__ \ 'names) apply 10, "zifnab")
+        val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 10) -> "zifnab")
         actual should be(expected)
       }
 
@@ -267,7 +267,7 @@ class JsValueOpsSpec
             "names" -> arr("zifnab")
           )
 
-        val actual = JsValues.updated(exemplar, (__ \ 'names) apply 0, "zifnab")
+        val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 0) -> "zifnab")
         actual should be(expected)
       }
 
@@ -284,7 +284,7 @@ class JsValueOpsSpec
             "names" -> arr("fizban", "paladine", "zifnab")
           )
 
-        val actual = JsValues.updated(exemplar, (__ \ 'names) apply 1, "paladine")
+        val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 1) -> "paladine")
         actual should be(expected)
       }
 
@@ -314,7 +314,7 @@ class JsValueOpsSpec
             )
           )
 
-        val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 0) \ 'AKA, "zifnab")
+        val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 0) \ 'AKA -> "zifnab")
         actual should be(expected)
       }
 
@@ -343,7 +343,7 @@ class JsValueOpsSpec
             )
           )
 
-        val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 0) \ 'common, "zifnab")
+        val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 0) \ 'common -> "zifnab")
         actual should be(expected)
       }
 
@@ -371,7 +371,7 @@ class JsValueOpsSpec
               )
           )
 
-        val actual = JsValues.updated(exemplar, __ \ 'names \ 'DG, "zifnab")
+        val actual = JsValues.updated(exemplar, __ \ 'names \ 'DG -> "zifnab")
         actual should be(expected)
       }
 
@@ -399,7 +399,7 @@ class JsValueOpsSpec
             )
           )
 
-        val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 0) \ 'common, "fizban")
+        val actual = JsValues.updated(exemplar, ((__ \ 'names) apply 0) \ 'common -> "fizban")
         actual should be(expected)
       }
 

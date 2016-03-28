@@ -71,8 +71,60 @@ assert(actual.toSet == expected)
 
   /**
    * Returns a [[play.api.libs.json.JsValue]] reflecting the given updates.
+   *
+   * To illustrate:
+   * {{{
+import ahlers.michael.playful.json.JsValues.updated
+import play.api.libs.json.Json._
+import play.api.libs.json._
+
+val sample =
+  obj(
+    "persons" -> arr(
+      obj(
+        "name" -> "J. Smith",
+        "addresses" -> arr(
+          obj(
+            "street" -> "123 Oak Street",
+            "city" -> "Oakmont"
+          )
+        )
+      )
+    )
+  )
+
+val expected =
+  obj(
+    "persons" -> arr(
+      obj(
+        "name" -> "John Smith",
+        "addresses" -> arr(
+          obj(
+            "street" -> "123 Oak Street",
+            "city" -> "Oakmont",
+            "state" -> "PA"
+          )
+        )
+      ),
+      obj(
+        "name" -> "Jane Smith"
+      )
+    )
+  )
+
+val actual =
+  updated(sample,
+    (__ \ 'persons apply 0) \ 'name -> "John Smith",
+    ((__ \ 'persons apply 0) \ 'addresses apply 0) \ 'state -> "PA",
+    (__ \ 'persons apply 1) \ 'name -> "Jane Smith"
+  )
+
+assert(actual == expected)
+   * }}}
+   *
+   * @see [[https://github.com/playframework/playframework/issues/943 Play Framework Issue 943]]
    */
-  def updated[T](path: JsPath, value: T)(implicit w: Writes[T]): JsValue = {
+  def updated[T](updates: (JsPath, JsValueWrapper)*): JsValue = {
 
     def KeyPathLens(field: String, alternate: JsValue) = Lens[JsValue, JsValue](_ \ field getOrElse alternate) {
       assignment => {
@@ -123,7 +175,9 @@ assert(actual.toSet == expected)
 
       }
 
-    follow(path.path, Lens.id) set w.writes(value) apply subject
+    updates.foldLeft(subject) { case (a, (path, JsValueWrapperImpl(value))) =>
+      follow(path.path, Lens.id) set value apply a
+    }
 
   }
 
