@@ -26,7 +26,7 @@ scalaVersion := "2.11.7"
 scalacOptions ++=
   "-feature" ::
     "-target:jvm-1.8" ::
-    "-Xlint" ::
+    // "-Xlint" ::
     "-Xfatal-warnings" ::
     Nil
 
