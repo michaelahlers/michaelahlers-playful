@@ -1,4 +1,4 @@
-# Playful [![Build Status](https://travis-ci.org/michaelahlers/michaelahlers-playful.svg?branch=master)](https://travis-ci.org/michaelahlers/michaelahlers-playful) [![Download](https://api.bintray.com/packages/michaelahlers/maven/michaelahlers-playful/images/download.svg) ](https://bintray.com/michaelahlers/maven/michaelahlers-playful/_latestVersion) [![Discuss](https://badges.gitter.im/michaelahlers/michaelahlers-playful.svg)](https://gitter.im/michaelahlers/michaelahlers-playful?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Playful [![Build Status](https://travis-ci.org/michaelahlers/michaelahlers-playful.svg?branch=master)](https://travis-ci.org/michaelahlers/michaelahlers-playful) [![Discuss](https://badges.gitter.im/michaelahlers/michaelahlers-playful.svg)](https://gitter.im/michaelahlers/michaelahlers-playful?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Odds and ends for developers using [Lightbend's](http://lightbend.com) [Play Framework](http://playframework.com).
 
